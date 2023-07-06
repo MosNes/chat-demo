@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useState} from 'react';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container'
@@ -7,9 +7,35 @@ import Grid from '@mui/material/Unstable_Grid2';
 import TextField from '@mui/material/TextField';
 import io from 'socket.io-client';
 
+
 const socket = io('http://localhost:3001');
+    socket.on('connect', () => {
+        console.log(`Connected to the Chat Server with ID: ${socket.id}`);
+    });
 
 const Chat = () => {
+
+    const [messages, setMessages] = useState(['Welcome to the chat!']);
+
+    //state and change handler for the user's message input field
+    const [userMessage, setUserMessage] = useState('');
+
+    const handleMessageChange = (e) => {
+        setUserMessage(e.target.value);
+    };
+
+    //state and change handler for the user's room input field
+    const [userRoom, setUserRoom] = useState('');
+
+    const handleRoomChange = (e) => {
+        setUserRoom(e.target.value);
+    };
+
+    const sendMessage = (e) => {
+        e.preventDefault();
+        setMessages([...messages, userMessage]);
+    }
+
     return (
         <Container>
             <Grid container spacing={2} mt={2}>
@@ -32,7 +58,10 @@ const Chat = () => {
                                 p: 3,
                             }}
                         >
-                            asdfas
+                            {
+                                //for each message in the message array, create a new paragraph element
+                                messages.map( (message, index) => <p key={index}>{message}</p>)
+                            }
                         </Paper>
                     </ Box>
                 </Grid>
@@ -40,12 +69,12 @@ const Chat = () => {
                 <Grid xs={12} container>
 
                         <Grid item xs={12} display='flex' justifyContent='center'>
-                            <TextField id="message-input" label="Message" variant="outlined" fullWidth/>
-                            <Button variant="contained">Send</Button>
+                            <TextField id="message-input" label="Message" variant="outlined" fullWidth onChange={handleMessageChange}/>
+                            <Button variant="contained" onClick={sendMessage}>Send</Button>
                         </Grid>
 
                         <Grid item xs={12} display='flex' justifyContent='center'>
-                            <TextField id="room-input" label="Room" variant="outlined" fullWidth/>
+                            <TextField id="room-input" label="Room" variant="outlined" fullWidth onChange={handleRoomChange}/>
                             <Button variant="contained">Join</Button>
                         </Grid>
                     
