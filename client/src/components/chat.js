@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import {React, useState, useRef} from 'react';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container'
@@ -18,22 +18,25 @@ const Chat = () => {
     const [messages, setMessages] = useState(['Welcome to the chat!']);
 
     //state and change handler for the user's message input field
-    const [userMessage, setUserMessage] = useState('');
+    //useRef instead of useState because we don't want to re-render the component when the user types
+    const userMessage = useRef('');
 
     const handleMessageChange = (e) => {
-        setUserMessage(e.target.value);
+        userMessage.current = e.target.value;
     };
 
     //state and change handler for the user's room input field
-    const [userRoom, setUserRoom] = useState('');
+    const userRoom = useRef('');
 
     const handleRoomChange = (e) => {
-        setUserRoom(e.target.value);
+        userRoom.current = e.target.value;
     };
 
     const sendMessage = (e) => {
         e.preventDefault();
-        setMessages([...messages, userMessage]);
+        setMessages([...messages, userMessage.current]);
+        //clears text field after message is sent
+        userMessage.current = '';
     }
 
     return (
@@ -74,7 +77,7 @@ const Chat = () => {
                         </Grid>
 
                         <Grid item xs={12} display='flex' justifyContent='center'>
-                            <TextField id="room-input" label="Room" variant="outlined" fullWidth onChange={handleRoomChange}/>
+                            <TextField id="room-input" label="Room" variant="outlined" fullWidth onChange={handleRoomChange} ref={userMessage}/>
                             <Button variant="contained">Join</Button>
                         </Grid>
                     
