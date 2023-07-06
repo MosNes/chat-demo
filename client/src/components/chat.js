@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container'
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Unstable_Grid2';
+import TextField from '@mui/material/TextField';
 
 const Chat = () => {
     return (
@@ -33,18 +34,20 @@ const Chat = () => {
                     </ Box>
                 </Grid>
 
-                <Grid item xs={12} display='flex' justifyContent='center'>
-                    <Grid container spacing={2}>
+                <Grid xs={12} container>
 
-                        <Grid item xs={6}>
-                            <Button variant="contained">Default</Button>
+                        <Grid item xs={12} display='flex' justifyContent='center'>
+                            <TextField id="message-input" label="Message" variant="outlined" fullWidth/>
+                            <Button variant="contained">Send</Button>
                         </Grid>
 
-                        <Grid item xs={6}>
-                            <Button variant="contained">Default</Button>
+                        <Grid item xs={12} display='flex' justifyContent='center'>
+                            <TextField id="room-input" label="Room" variant="outlined" fullWidth/>
+                            <Button variant="contained">Join</Button>
                         </Grid>
                     
-                    </Grid>
+              
+
                 </Grid>
             </Grid>
         </ Container>
