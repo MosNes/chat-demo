@@ -5,6 +5,9 @@ import Container from '@mui/material/Container'
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Unstable_Grid2';
 import TextField from '@mui/material/TextField';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3001');
 
 const Chat = () => {
     return (
