@@ -19,24 +19,16 @@ const Chat = () => {
 
     //state and change handler for the user's message input field
     //useRef instead of useState because we don't want to re-render the component when the user types
-    const userMessage = useRef('');
-
-    const handleMessageChange = (e) => {
-        userMessage.current = e.target.value;
-    };
+    const messageRef = useRef('');
 
     //state and change handler for the user's room input field
-    const userRoom = useRef('');
-
-    const handleRoomChange = (e) => {
-        userRoom.current = e.target.value;
-    };
+    const roofRef = useRef('');
 
     const sendMessage = (e) => {
         e.preventDefault();
-        setMessages([...messages, userMessage.current]);
+        setMessages([...messages, messageRef.current.value]);
         //clears text field after message is sent
-        userMessage.current = '';
+        messageRef.current.value = '';
     }
 
     return (
@@ -72,12 +64,12 @@ const Chat = () => {
                 <Grid xs={12} container>
 
                         <Grid item xs={12} display='flex' justifyContent='center'>
-                            <TextField id="message-input" label="Message" variant="outlined" fullWidth onChange={handleMessageChange}/>
+                            <TextField id="message-input" label="Message" variant="outlined" fullWidth inputRef={messageRef}/>
                             <Button variant="contained" onClick={sendMessage}>Send</Button>
                         </Grid>
 
                         <Grid item xs={12} display='flex' justifyContent='center'>
-                            <TextField id="room-input" label="Room" variant="outlined" fullWidth onChange={handleRoomChange} ref={userMessage}/>
+                            <TextField id="room-input" label="Room" variant="outlined" fullWidth inputRef={roofRef}/>
                             <Button variant="contained">Join</Button>
                         </Grid>
                     
