@@ -10,8 +10,11 @@ io.on('connection', socket => {
     //listen for send-messsage event and call function to handle the incoming message
     socket.on('send-message', (message) => {
 
-        //send message to all connected clients
+        //send message to all connected clients, including the initiating client
         io.emit('receive-message', message);
+
+        //to send message to all connected clients, except the initiating client, use socket.broadcast.emit()
+        //socket.broadcast.emit('receive-message', message);
 
         console.log(message);
     })
