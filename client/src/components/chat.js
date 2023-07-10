@@ -5,13 +5,14 @@ import Container from '@mui/material/Container'
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Unstable_Grid2';
 import TextField from '@mui/material/TextField';
-import io from 'socket.io-client';
+import { io } from 'socket.io-client';
 
 
 const socket = io('http://localhost:3001');
-    socket.on('connect', () => {
-        console.log(`Connected to the Chat Server with ID: ${socket.id}`);
-    });
+
+socket.on('connect', () => {
+    console.log(`Connected to the Chat Server with ID: ${socket.id}`);
+});
 
 const Chat = () => {
 
@@ -26,10 +27,19 @@ const Chat = () => {
 
     const sendMessage = (e) => {
         e.preventDefault();
-        setMessages([...messages, messageRef.current.value]);
+
+        //emit send-message event to the server
+        socket.emit('send-message', messageRef.current.value);
+
         //clears text field after message is sent
         messageRef.current.value = '';
     }
+
+    //receive messages from server and display them in chat box
+    socket.on('receive-message', message => {
+        setMessages([...messages, message]);
+    })
+    
 
     return (
         <Container>
