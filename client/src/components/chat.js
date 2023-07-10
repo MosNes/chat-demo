@@ -23,13 +23,16 @@ const Chat = () => {
     const messageRef = useRef('');
 
     //state and change handler for the user's room input field
-    const roofRef = useRef('');
+    const roomRef = useRef('');
 
     const sendMessage = (e) => {
         e.preventDefault();
 
         //emit send-message event to the server
-        socket.emit('send-message', messageRef.current.value);
+        socket.emit('send-message', messageRef.current.value, roomRef.current.value);
+
+        //update the state with new message
+        setMessages([...messages, messageRef.current.value]);
 
         //clears text field after message is sent
         messageRef.current.value = '';
@@ -79,7 +82,7 @@ const Chat = () => {
                         </Grid>
 
                         <Grid item xs={12} display='flex' justifyContent='center'>
-                            <TextField id="room-input" label="Room" variant="outlined" fullWidth inputRef={roofRef}/>
+                            <TextField id="room-input" label="Room" variant="outlined" fullWidth inputRef={roomRef}/>
                             <Button variant="contained">Join</Button>
                         </Grid>
                     
