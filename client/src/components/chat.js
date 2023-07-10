@@ -38,6 +38,18 @@ const Chat = () => {
         messageRef.current.value = '';
     }
 
+    const joinRoom = (e) => {
+        e.preventDefault();
+
+        //emit join-room event to the server
+        socket.emit('join-room', roomRef.current.value, message=> {
+            setMessages([...messages, message]);
+        });
+
+        //clear text field after room is joined
+        roomRef.current.value = '';
+    }
+
     //receive messages from server and display them in chat box
     socket.on('receive-message', message => {
         setMessages([...messages, message]);
@@ -83,7 +95,7 @@ const Chat = () => {
 
                         <Grid item xs={12} display='flex' justifyContent='center'>
                             <TextField id="room-input" label="Room" variant="outlined" fullWidth inputRef={roomRef}/>
-                            <Button variant="contained">Join</Button>
+                            <Button variant="contained" onClick={joinRoom}>Join</Button>
                         </Grid>
                     
               

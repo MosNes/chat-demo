@@ -1,6 +1,9 @@
+const { instrument } = require('@socket.io/admin-ui')
+
 const io = require('socket.io')(3001, {
     cors: {
-        origin: ['http://localhost:3000']
+        origin: ['http://localhost:3000', 'https://admin.socket.io'],
+        credentials: true
     }
 });
 
@@ -22,9 +25,18 @@ io.on('connection', socket => {
             //otherwise send message to specific room
             socket.to(room).emit('receive-message', message);
         }
+    });
 
-        
+    //listen for join-room event and call function to create a room
+    socket.on('join-room', (room, cb) => {
 
-        console.log(message);
-    })
+        socket.join(room);
+
+        //invokes callback function with message to display in chat box
+        cb(`Joined room ${room}`);
+
+    });
+    
 });
+
+instrument(io, { auth: false });
