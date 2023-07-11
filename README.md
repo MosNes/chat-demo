@@ -26,6 +26,8 @@ Backend created using the guide from Web Dev Simplified: https://www.youtube.com
 - Enter a message in one browser tab, and click send to send it to all other connected clients.
 - To join a private room, type in the name of a room and click join.
 - Messages in private rooms are only sent to other clients in the same private room.
+- To run locally, clone this repo and use ```npm run develop```
+- When deploying any socket.io app to Heroku, use ```heroku features:enable http-session-affinity```
 
 ## Contributing
 
