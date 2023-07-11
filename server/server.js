@@ -1,8 +1,20 @@
-const { instrument } = require('@socket.io/admin-ui')
+const { instrument } = require('@socket.io/admin-ui');
 
-const io = require('socket.io')(3001, {
+//use heroku defined port or 3001 if developing locally
+const PORT = process.env.PORT || 3001;
+
+//set default allowed Origins for local development
+let allowedOrigins = ['http://localhost:3000', 'https://admin.socket.io'];
+
+
+//if in production, set allowed origins to the heroku app URL
+if (process.env.NODE_ENV === 'production') {
+    allowedOrigins = ['https://mosnes-chat-demo-3311766bf952.herokuapp.com/'];
+}
+
+const io = require('socket.io')(PORT, {
     cors: {
-        origin: ['http://localhost:3000', 'https://admin.socket.io'],
+        origin: allowedOrigins,
         credentials: true
     }
 });
