@@ -47,8 +47,6 @@ const Chat = () => {
             setMessages([...messages, message]);
         });
 
-        //clear text field after room is joined
-        roomRef.current.value = '';
     }
 
     //receive messages from server and display them in chat box
