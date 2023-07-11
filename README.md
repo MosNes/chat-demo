@@ -19,7 +19,7 @@ A simple chat app demo created with React, Material UI, Node, and socket.io.
 
 Backend created using the guide from Web Dev Simplified: https://www.youtube.com/watch?v=ZKEqqIO7n-k
 
-Deployed App:
+[Deployed App]:(https://mosnes-chat-demo-3311766bf952.herokuapp.com/)
 
 ## Instructions
 - Open the app in two separate browser tabs.
